@@ -1,0 +1,8 @@
+{
+  "domain": "DATA ENGINEERING",
+  "title": "SQL Data Pipeline",
+  "description": "ETL pipeline for automated data extraction from port logistics systems. Reduced query time by 80%.",
+  "tools": ["SQL", "PostgreSQL", "Python", "Airflow"],
+  "public_link": "https://flaviapissarra.github.io/ctecl/p/sql_data_pipeline/",
+  "request_access": "https://linkedin.com/in/flaviapissarra"
+}
