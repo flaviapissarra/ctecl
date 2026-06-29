@@ -1,0 +1,8 @@
+{
+  "domain": "LOGISTICS",
+  "title": "Cross-Border Freight Cost Dashboard",
+  "description": "Mapped shipping variances across 12 major ports. Automated reporting reduced manual data cleaning by 65%.",
+  "tools": ["Power BI", "SQL", "Python"],
+  "public_link": "https://flaviapissarra.github.io/ctecl/p/logistics_freight_dashboard/",
+  "request_access": "https://linkedin.com/in/flaviapissarra"
+}
