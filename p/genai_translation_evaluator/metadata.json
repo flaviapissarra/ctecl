@@ -1,0 +1,8 @@
+{
+  "domain": "AI/TRANSLATION",
+  "title": "GenAI Translation Evaluator",
+  "description": "Automated quality assessment for technical translations using LLMs and custom evaluation metrics.",
+  "tools": ["Python", "OpenAI API", "Pandas", "JSON"],
+  "public_link": "https://flaviapissarra.github.io/ctecl/p/genai_translation_evaluator/",
+  "request_access": "https://linkedin.com/in/flaviapissarra"
+}
