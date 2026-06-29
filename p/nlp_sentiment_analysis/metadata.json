@@ -1,0 +1,8 @@
+{
+  "domain": "NLP",
+  "title": "NLP Sentiment Analysis",
+  "description": "Sentiment analysis pipeline for multilingual customer feedback and trade communications.",
+  "tools": ["Python", "NLTK", "Transformers", "Pandas"],
+  "public_link": "https://flaviapissarra.github.io/ctecl/p/nlp_sentiment_analysis/",
+  "request_access": "https://linkedin.com/in/flaviapissarra"
+}
