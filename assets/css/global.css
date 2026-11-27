@@ -336,3 +336,29 @@ footer {
   box-shadow: none !important;
   transform: none !important;
 }
+
+/* Botão de abrir o modal de contato */
+#openContactModal {
+  background: var(--terminal-green) !important;
+  color: var(--bg-color) !important;
+  border: 1px solid var(--terminal-green) !important;
+  border-radius: 8px !important;
+  padding: 0.8rem 1.8rem !important;
+  font-weight: 700 !important;
+  font-family: 'Fira Code', 'Courier New', monospace !important;
+  font-size: 0.9rem !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+  display: inline-block;
+}
+
+#openContactModal:hover {
+  background: #00cc33 !important;
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.4) !important;
+  transform: translateY(-2px) !important;
+}
+
+#openContactModal:active {
+  transform: translateY(0) !important;
+}
