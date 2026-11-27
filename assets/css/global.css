@@ -245,3 +245,59 @@ footer {
   text-align: center; padding: 2rem 0;
   color: var(--terminal-green); font-weight: bold;
 }
+
+/* ===== 1. Esquema escuro global (resolve dropdown branco + scrollbar nativa) ===== */
+:root { color-scheme: dark; }
+
+/* ===== 2. Scrollbars finas, arredondadas, quase pretas ===== */
+* { scrollbar-width: thin; scrollbar-color: #222222 #0a0a0a; }  /* Firefox */
+
+::-webkit-scrollbar { width: 8px; height: 8px; }               /* Chrome/Safari/Edge */
+::-webkit-scrollbar-track { background: #0a0a0a; }
+::-webkit-scrollbar-thumb {
+  background: #222222;
+  border-radius: 8px;
+  border: 2px solid #0a0a0a;   /* cria o "fio" fino arredondado */
+}
+::-webkit-scrollbar-thumb:hover { background: var(--terminal-green); }
+
+/* ===== 3. Modal seguindo o padrão dos cards ===== */
+.modal-content {
+  border-radius: 12px;                 /* mesmo raio visual dos cards */
+  background: var(--bg-color);
+  border: 1px solid var(--terminal-green);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* Inputs, select e textarea com cantos arredondados como os cards */
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Garante que as opções do dropdown fiquem escuras (reforço ao color-scheme) */
+.contact-form option {
+  background: var(--bg-color);
+  color: var(--text-primary);
+}
+
+/* ===== 4. Botão de envio verde (corrige o botão branco) ===== */
+.contact-form .btn-primary {
+  background: var(--terminal-green);
+  color: var(--bg-color);
+  border: 1px solid var(--terminal-green);
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.contact-form .btn-primary:hover {
+  background: #00cc33;
+  box-shadow: 0 0 12px rgba(0, 255, 65, 0.35);
+}
+.contact-form .btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
