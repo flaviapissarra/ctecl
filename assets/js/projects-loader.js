@@ -1,104 +1,89 @@
 const GITHUB_USER = 'flaviapissarra';
 const GITHUB_REPO = 'ctecl';
 const PROJECTS_DIR = './p/';
-const API_LIST_URL = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/p`;
-const CACHE_KEY = 'ctecl_projects_cache';
-const CACHE_TTL = 10 * 60 * 1000;
+const API_URL = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/p`;
 
 let allProjects = [];
 
-function getCache() {
-  try {
-    const raw = sessionStorage.getItem(CACHE_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw);
-    if (Date.now() - parsed.timestamp > CACHE_TTL) return null;
-    return parsed.data;
-  } catch { return null; }
-}
-
-function setCache(data) {
-  try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data })); } catch {}
-}
-
-async function listProjectFolders() {
-  const cached = getCache();
-  if (cached) return cached;
-  try {
-    const response = await fetch(API_LIST_URL, { headers: { 'Accept': 'application/vnd.github.v3+json' } });
-    if (!response.ok) throw new Error(`GitHub API status ${response.status}`);
-    const items = await response.json();
-    const folders = items.filter(item => item.type === 'dir').map(item => item.name);
-    setCache(folders);
-    return folders;
-  } catch (error) {
-    console.warn('Falha ao listar pastas via API:', error);
-    return ['rag-customer-insights-engine', 'fact-checking-rag-agent', 'bi-llm-query-interface'];
-  }
-}
-
-async function fetchProjectMetadata(folderName) {
-  try {
-    const response = await fetch(`${PROJECTS_DIR}${folderName}/metadata.json`);
-    if (!response.ok) return null;
-    const data = await response.json();
-    return { ...data, folder: folderName };
-  } catch { return null; }
-}
-
-function createProjectCard(project) {
-  const card = document.createElement('a');
-  card.className = 'project-card';
-  card.href = `${PROJECTS_DIR}${project.folder}/`;
-  card.innerHTML = `
-    <span class="project-status">${project.status || 'In Development'}</span>
-    <h3 class="project-title">${project.title}</h3>
-    <p class="project-desc">${project.description}</p>
-    <div class="tech-tags">
-      ${(project.tags || []).map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
-    </div>
-  `;
-  return card;
-}
-
-function renderProjects(projectsToRender) {
-  const grid = document.getElementById('projectsGrid');
-  const countEl = document.getElementById('projectCount');
-  if (!grid) return;
-  
-  grid.innerHTML = '';
-  if (projectsToRender.length === 0) {
-    grid.innerHTML = `<div class="empty-state"><p>No projects found matching your search.</p></div>`;
-    countEl.textContent = '0 projects';
-    return;
-  }
-  projectsToRender.forEach(p => grid.appendChild(createProjectCard(p)));
-  countEl.textContent = `${projectsToRender.length} project${projectsToRender.length !== 1 ? 's' : ''}`;
-}
-
-function filterProjects(query) {
-  const q = query.toLowerCase().trim();
-  if (!q) return allProjects;
-  return allProjects.filter(p => {
-    const haystack = [p.title, p.description, p.category, ...(p.tags || [])].join(' ').toLowerCase();
-    return haystack.includes(q);
-  });
-}
-
 async function init() {
   const grid = document.getElementById('projectsGrid');
-  const searchInput = document.getElementById('searchInput');
-  if (!grid) return;
-
-  grid.innerHTML = '<div class="empty-state"><p>Loading projects...</p></div>';
-  const folders = await listProjectFolders();
-  const results = await Promise.all(folders.map(fetchProjectMetadata));
-  allProjects = results.filter(p => p !== null).sort((a, b) => a.title.localeCompare(b.title));
+  const countEl = document.getElementById('projectCount');
   
-  renderProjects(allProjects);
-  if (searchInput) {
-    searchInput.addEventListener('input', e => renderProjects(filterProjects(e.target.value)));
+  if (!grid) return; // Segurança caso o ID não exista
+  
+  grid.innerHTML = '<div class="empty-state">Loading repository data...</div>';
+
+  try {
+    // 1. Busca as pastas
+    const res = await fetch(API_URL);
+    if (!res.ok) throw new Error('API Error');
+    const data = await res.json();
+    
+    const folders = data.filter(item => item.type === 'dir').map(item => item.name);
+    
+    // 2. Busca os metadata.json de cada pasta
+    const promises = folders.map(async (folder) => {
+      try {
+        const metaRes = await fetch(`${PROJECTS_DIR}${folder}/metadata.json`);
+        if (!metaRes.ok) return null;
+        const meta = await metaRes.json();
+        return { ...meta, folder };
+      } catch (e) { return null; }
+    });
+
+    const results = await Promise.all(promises);
+    allProjects = results.filter(p => p !== null).sort((a, b) => a.title.localeCompare(b.title));
+
+    renderProjects(allProjects);
+    
+    // Configura a busca
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase();
+        const filtered = allProjects.filter(p => 
+          p.title.toLowerCase().includes(term) || 
+          p.tags.some(t => t.toLowerCase().includes(term))
+        );
+        renderProjects(filtered);
+      });
+    }
+
+  } catch (error) {
+    console.error(error);
+    grid.innerHTML = '<div class="empty-state">Error loading projects. Please try again later.</div>';
   }
+}
+
+function renderProjects(projects) {
+  const grid = document.getElementById('projectsGrid');
+  const countEl = document.getElementById('projectCount');
+  
+  grid.innerHTML = '';
+  countEl.textContent = `${projects.length} project${projects.length !== 1 ? 's' : ''}`;
+
+  if (projects.length === 0) {
+    grid.innerHTML = '<div class="empty-state">No projects found matching your search.</div>';
+    return;
+  }
+
+  projects.forEach(proj => {
+    const card = document.createElement('a');
+    card.className = 'project-card'; // Classe essencial para o CSS
+    card.href = `${PROJECTS_DIR}${proj.folder}/`;
+    
+    // Construção segura do HTML interno
+    const tagsHtml = (proj.tags || []).map(tag => `<span class="tech-tag">#${tag}</span>`).join('');
+    
+    card.innerHTML = `
+      <span class="project-status">${proj.status || 'In Dev'}</span>
+      <h3 class="project-title">${proj.title}</h3>
+      <p class="project-desc">${proj.description}</p>
+      <div class="tech-tags">${tagsHtml}</div>
+    `;
+    
+    grid.appendChild(card);
+  });
 }
 
 document.addEventListener('DOMContentLoaded', init);
