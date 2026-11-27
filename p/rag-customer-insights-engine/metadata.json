@@ -1,0 +1,7 @@
+{
+  "title": "RAG Customer Insights Engine",
+  "category": "Generative AI & NLP",
+  "status": "In Development",
+  "description": "A Retrieval-Augmented Generation (RAG) system that answers natural language queries over customer feedback datasets. Features prompt optimization, vector search, and source-cited LLM responses to ensure accuracy and minimize hallucinations.",
+  "tags": ["RAG", "NLP", "LLM", "Python", "LangChain", "Vector Database", "Prompt Engineering"]
+}
