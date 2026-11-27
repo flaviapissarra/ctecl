@@ -3,125 +3,406 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CTeCL · Tech Lab for Linguists</title>
+  <title>CTeCL · Computational Linguistics & AI Research</title>
+  <meta name="description" content="Research and development in NLP, Generative AI, and Computational Linguistics by Flávia P. Pissarra." />
+  <link rel="icon" type="image/webp" href="./assets/logo-ctecl.webp" />
+  
+  <style>
+    :root {
+      --bg-color: #050505;
+      --card-bg: #111111;
+      --text-main: #ffffff;
+      --text-muted: #a0a0a0;
+      --brand-green: #00b359; /* Verde da marca com contraste otimizado para fundo escuro */
+      --border-color: #222222;
+      --input-bg: #1a1a1a;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header & Logo */
+    header {
+      text-align: center;
+      padding: 4rem 1.5rem 2rem;
+    }
+
+    .logo-container {
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 1.5rem;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--brand-green);
+      box-shadow: 0 0 25px rgba(0, 179, 89, 0.15);
+      transition: transform 0.3s ease;
+    }
+
+    .logo-container:hover { transform: scale(1.05); }
+
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto 2.5rem;
+    }
+
+    /* Search Bar */
+    .search-container {
+      max-width: 550px;
+      margin: 0 auto 3rem;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      background-color: var(--input-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      color: var(--text-main);
+      font-size: 1rem;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .search-input:focus {
+      border-color: var(--brand-green);
+      box-shadow: 0 0 0 3px rgba(0, 179, 89, 0.1);
+    }
+
+    .search-input::placeholder { color: #666; }
+
+    /* Projects Grid */
+    main {
+      flex: 1;
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 1.5rem 4rem;
+      width: 100%;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--brand-green);
+      font-weight: 600;
+    }
+
+    .project-count {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 1.75rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .project-card:hover {
+      border-color: var(--brand-green);
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .project-status {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-green);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+
+    .project-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      line-height: 1.3;
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      flex: 1;
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tech-tag {
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.3rem 0.7rem;
+      border-radius: 4px;
+      color: #d0d0d0;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 4rem 1.5rem;
+      color: var(--text-muted);
+      grid-column: 1 / -1;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2.5rem 1.5rem;
+      border-top: 1px solid var(--border-color);
+      margin-top: auto;
+    }
+
+    .social-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .social-link:hover { color: var(--brand-green); }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      h1 { font-size: 2rem; }
+      .logo-container { width: 90px; height: 90px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .section-header { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+    }
+  </style>
 </head>
 <body>
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="brand">
-        <img
-          src="logo.png"
-          alt="CTeCL Logo"
-          style="width: 64px; height: 64px; border-radius: 12px; margin-bottom: 0.75rem; object-fit: cover;"
-          onerror="this.style.display='none'"
-        />
-        <h1>ctecl</h1>
-        <p class="subtitle">TECH LAB FOR LINGUISTS</p>
-      </div>
 
-      <nav class="nav-menu">
-        <a href="#projects" class="nav-btn active">Lab Projects</a>
-        <a href="https://instagram.com" target="_blank" rel="noopener" class="nav-btn">Instagram ↗</a>
-        <a href="https://github.com" target="_blank" rel="noopener" class="nav-btn">GitHub Repo ↗</a>
-        <a href="https://github.io" class="nav-btn">← Main Portfolio</a>
-      </nav>
+  <header>
+    <div class="logo-container">
+      <img src="./assets/logo-ctecl.webp" alt="CTeCL Logo" loading="lazy" />
+    </div>
+    <h1>CTeCL</h1>
+    <p class="tagline">Computational Linguistics & AI Research Lab<br/>Bridging human language and machine intelligence.</p>
+    
+    <div class="search-container">
+      <input 
+        type="text" 
+        id="searchInput" 
+        class="search-input" 
+        placeholder="Search projects by name, tech stack, or description..." 
+        aria-label="Search projects"
+      />
+    </div>
+  </header>
 
-      <div class="sidebar-footer">
-        <span class="status-badge">ACTIVE LAB</span>
-        <p class="copyright">© 2026 Flávia P. Pissarra</p>
-      </div>
-    </aside>
+  <main>
+    <div class="section-header">
+      <h2 class="section-title">Featured Projects</h2>
+      <span id="projectCount" class="project-count">Loading...</span>
+    </div>
+    
+    <div id="projectsGrid" class="projects-grid">
+      <!-- Projects injected dynamically via JavaScript -->
+    </div>
+  </main>
 
-    <main class="content">
-      <section id="projects" class="section active">
-        <header class="section-header">
-          <h2>CTeCL · Projects &amp; Experiments</h2>
-          <p>Open-source computational linguistics tools, datasets, and scripts synced directly from repository folders.</p>
-        </header>
+  <footer>
+    <a href="https://www.instagram.com/ctecl" target="_blank" rel="noopener noreferrer" class="social-link">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+      Follow CTeCL on Instagram
+    </a>
+  </footer>
 
-        <div id="projects-container" class="cards-grid">
-          <div class="card">
-            <p>Loading repository folders...</p>
-          </div>
+  <script>
+    // ===== CONFIGURATION =====
+    const GITHUB_USER = 'flaviapissarra';
+    const GITHUB_REPO = 'ctecl';
+    const PROJECTS_DIR = './p/';
+    const API_LIST_URL = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/p`;
+    const CACHE_KEY = 'ctecl_projects_cache_v1';
+    const CACHE_TTL = 15 * 60 * 1000; // 15 minutes cache to avoid GitHub API rate limits
+
+    let allProjects = [];
+
+    // ===== CACHING SYSTEM =====
+    function getCache() {
+      try {
+        const raw = sessionStorage.getItem(CACHE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (Date.now() - parsed.timestamp > CACHE_TTL) return null;
+        return parsed.data;
+      } catch { return null; }
+    }
+
+    function setCache(data) {
+      try {
+        sessionStorage.setItem(CACHE_KEY, JSON.stringify({ timestamp: Date.now(), data }));
+      } catch {}
+    }
+
+    // ===== FETCH FOLDERS FROM GITHUB API =====
+    async function listProjectFolders() {
+      const cached = getCache();
+      if (cached) return cached;
+
+      try {
+        const response = await fetch(API_LIST_URL, {
+          headers: { 'Accept': 'application/vnd.github.v3+json' }
+        });
+        if (!response.ok) throw new Error(`API Status: ${response.status}`);
+        
+        const items = await response.json();
+        const folders = items.filter(item => item.type === 'dir').map(item => item.name);
+        
+        setCache(folders);
+        return folders;
+      } catch (error) {
+        console.warn('GitHub API failed, using fallback list:', error);
+        // Fallback list ensures the page never breaks if API rate limit is hit
+        return ['rag-customer-insights-engine', 'fact-checking-rag-agent', 'bi-llm-query-interface'];
+      }
+    }
+
+    // ===== FETCH METADATA FOR EACH PROJECT =====
+    async function fetchProjectMetadata(folderName) {
+      try {
+        const response = await fetch(`${PROJECTS_DIR}${folderName}/metadata.json`);
+        if (!response.ok) return null;
+        const data = await response.json();
+        return { ...data, folder: folderName };
+      } catch { return null; }
+    }
+
+    // ===== RENDERING =====
+    function createProjectCard(project) {
+      const card = document.createElement('a');
+      card.className = 'project-card';
+      card.href = `${PROJECTS_DIR}${project.folder}/`;
+      
+      card.innerHTML = `
+        <span class="project-status">${project.status || 'In Development'}</span>
+        <h3 class="project-title">${project.title}</h3>
+        <p class="project-desc">${project.description}</p>
+        <div class="tech-tags">
+          ${(project.tags || []).map(tag => `<span class="tech-tag">${tag}</span>`).join('')}
         </div>
-      </section>
-    </main>
-  </div>
-
-  <!--script>
-    const REPO_OWNER = 'flaviapissarra';
-    const REPO_NAME = 'ctecl';
-    const BRANCH = 'main';
-    const IGNORED_FOLDERS = ['assets', 'css', 'js', 'images', 'img', '.github'];
-
-    function formatTitle(slug) {
-      return slug.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      `;
+      return card;
     }
 
-    async function getFolderSummary(folderName) {
-      try {
-        const res = await fetch(`https://githubusercontent.com{REPO_OWNER}/${REPO_NAME}/${BRANCH}/${folderName}/README.md`);
-        if (!res.ok) return null;
-        const text = await res.text();
-        const line = text.split('\n').map(l => l.trim()).find(l => l && !l.startsWith('#') && !l.startsWith('!'));
-        return line ? (line.length > 150 ? line.slice(0, 150) + '...' : line) : null;
-      } catch {
-        return null;
+    function renderProjects(projectsToRender) {
+      const grid = document.getElementById('projectsGrid');
+      const countEl = document.getElementById('projectCount');
+      grid.innerHTML = '';
+
+      if (projectsToRender.length === 0) {
+        grid.innerHTML = `<div class="empty-state"><p>No projects found matching your search.</p></div>`;
+        countEl.textContent = '0 projects';
+        return;
       }
+
+      projectsToRender.forEach(p => grid.appendChild(createProjectCard(p)));
+      countEl.textContent = `${projectsToRender.length} project${projectsToRender.length !== 1 ? 's' : ''}`;
     }
 
-    async function renderRepoFolders() {
-      const container = document.getElementById('projects-container');
-
-      try {
-        const res = await fetch(`https://github.com{REPO_OWNER}/${REPO_NAME}/contents`);
-        if (!res.ok) throw new Error('GitHub API error');
-
-        const items = await res.json();
-        const folders = items.filter(item => item.type === 'dir' && !IGNORED_FOLDERS.includes(item.name.toLowerCase()));
-
-        if (!folders.length) {
-          container.innerHTML = `
-            <article class="card">
-              <h3>No folders published yet</h3>
-              <p>Add a project directory to <code>${REPO_OWNER}/${REPO_NAME}</code> to display it here automatically.</p>
-            </article>`;
-          return;
-        }
-
-        container.innerHTML = '';
-
-        for (const folder of folders) {
-          const summary = await getFolderSummary(folder.name);
-          const description = summary || `Computational linguistics scripts, corpora, and notebooks inside /${folder.name}.`;
-          const pageUrl = `https://${REPO_OWNER}.github.io/${REPO_NAME}/${folder.name}/`;
-
-          const card = document.createElement('article');
-          card.className = 'card';
-          card.innerHTML = `
-            <h3>${formatTitle(folder.name)}</h3>
-            <p>${description}</p>
-            <div class="tags">
-              <span class="tag">/${folder.name}</span>
-              <span class="tag">CTeCL</span>
-            </div>
-            <div class="card-links">
-              <a href="${folder.html_url}" target="_blank" rel="noopener">View Folder ↗</a>
-              <a href="${pageUrl}" target="_blank" rel="noopener">Open Page ↗</a>
-            </div>
-          `;
-          container.appendChild(card);
-        }
-      } catch {
-        container.innerHTML = `
-          <article class="card">
-            <h3>Unable to load folders</h3>
-            <p>Visit the <a href="https://github.com{REPO_OWNER}/${REPO_NAME}" target="_blank" rel="noopener">CTeCL GitHub repository ↗</a> directly.</p>
-          </article>`;
-      }
+    // ===== SEARCH LOGIC =====
+    function filterProjects(query) {
+      const q = query.toLowerCase().trim();
+      if (!q) return allProjects;
+      
+      return allProjects.filter(p => {
+        const searchableText = [
+          p.title, 
+          p.description, 
+          p.category, 
+          ...(p.tags || [])
+        ].join(' ').toLowerCase();
+        return searchableText.includes(q);
+      });
     }
 
-    renderRepoFolders();
-</script-->
+    // ===== INITIALIZATION =====
+    async function init() {
+      const grid = document.getElementById('projectsGrid');
+      const searchInput = document.getElementById('searchInput');
+      
+      grid.innerHTML = '<div class="empty-state"><p>Loading projects...</p></div>';
+
+      // 1. Get folders
+      const folders = await listProjectFolders();
+      
+      // 2. Fetch metadata for all folders in parallel
+      const promises = folders.map(fetchProjectMetadata);
+      const results = await Promise.all(promises);
+      
+      // 3. Filter out failed loads and sort alphabetically
+      allProjects = results
+        .filter(p => p !== null)
+        .sort((a, b) => a.title.localeCompare(b.title));
+
+      // 4. Initial render
+      renderProjects(allProjects);
+
+      // 5. Attach search listener
+      searchInput.addEventListener('input', (e) => {
+        renderProjects(filterProjects(e.target.value));
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
 </body>
 </html>
