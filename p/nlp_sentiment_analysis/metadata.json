@@ -1,7 +1,0 @@
-{
-  "title": "Multilingual NLP Sentiment & Irony Analysis",
-  "category": "Cross-Lingual NLP",
-  "status": "Under Construction",
-  "description": "Cross-lingual sentiment classification and pragmatic error audit across PT-BR, EN, and ES, evaluating how NLP models handle sarcasm and idiomatic expressions.",
-  "tags": ["NLP", "Cross-Lingual", "Python", "Sentiment Analysis", "PT-EN-ES"]
-}
