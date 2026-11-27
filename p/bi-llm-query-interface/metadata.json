@@ -1,0 +1,7 @@
+{
+  "title": "BI LLM Query Interface (Text-to-SQL)",
+  "category": "AI & Business Intelligence",
+  "status": "In Development",
+  "description": "An intelligent interface that translates natural language questions into optimized SQL queries or Pandas operations, enabling non-technical users to extract insights from logistics and business datasets using Large Language Models.",
+  "tags": ["Text-to-SQL", "Business Intelligence", "LLM", "Python", "SQL", "Data Engineering"]
+}
