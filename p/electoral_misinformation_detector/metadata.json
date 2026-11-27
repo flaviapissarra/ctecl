@@ -1,0 +1,7 @@
+{
+  "title": "Electoral Misinformation & Disinformation Detector (PT-BR)",
+  "category": "Forensic Linguistics & NLP",
+  "status": "Under Construction",
+  "description": "Linguistic and pragmatic analysis pipeline designed to detect rhetorical manipulation, urgency triggers, and misinformation patterns in Brazilian Portuguese viral messages.",
+  "tags": ["Forensic Linguistics", "PT-BR", "NLP", "Regex", "Information Integrity"]
+}
