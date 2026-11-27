@@ -69,12 +69,15 @@
       
           <!-- Formulário Nativo -->
           <form id="contactForm" class="contact-form">
-            <!-- Access Key da Web3Forms (Substitua pela sua) -->
+            <!-- Access Key da Web3Forms -->
             <input type="hidden" name="access_key" value="13a03c98-bbec-40ac-ae5d-2c13cca82fbc">
             
-            <!-- Honeypot (Isca para bots - mantenha invisível) -->
+            <!-- Honeypot (Isca para bots) -->
             <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
-      
+
+            <!-- Add mail subject -->
+            <input type="hidden" name="subject" value="New message from CTeCL portfolio">
+            
             <input type="text" name="name" placeholder="Your name" required />
             <input type="email" name="email" placeholder="Your email" required />
             <select name="type" required>
