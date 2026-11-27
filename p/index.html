@@ -1,1 +1,128 @@
-hi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CTeCL · Tech Lab for Linguists</title>
+  <link rel="stylesheet" href="flaviapissarra.github.io/assets/css/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="brand">
+        <img
+          src="logo.png"
+          alt="CTeCL Logo"
+          style="width: 64px; height: 64px; border-radius: 12px; margin-bottom: 0.75rem; object-fit: cover;"
+          onerror="this.style.display='none'"
+        />
+        <h1>ctecl</h1>
+        <p class="subtitle">TECH LAB FOR LINGUISTS</p>
+      </div>
+
+      <nav class="nav-menu">
+        <a href="#projects" class="nav-btn active">Lab Projects</a>
+        <a href="https://instagram.com" target="_blank" rel="noopener" class="nav-btn">Instagram ↗</a>
+        <a href="https://github.com" target="_blank" rel="noopener" class="nav-btn">GitHub Repo ↗</a>
+        <a href="https://github.io" class="nav-btn">← Main Portfolio</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <span class="status-badge">ACTIVE LAB</span>
+        <p class="copyright">© 2026 Flávia P. Pissarra</p>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section id="projects" class="section active">
+        <header class="section-header">
+          <h2>CTeCL · Projects &amp; Experiments</h2>
+          <p>Open-source computational linguistics tools, datasets, and scripts synced directly from repository folders.</p>
+        </header>
+
+        <div id="projects-container" class="cards-grid">
+          <div class="card">
+            <p>Loading repository folders...</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const REPO_OWNER = 'flaviapissarra';
+    const REPO_NAME = 'ctecl';
+    const BRANCH = 'main';
+    const IGNORED_FOLDERS = ['assets', 'css', 'js', 'images', 'img', '.github'];
+
+    function formatTitle(slug) {
+      return slug.replace(/[-_]+/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    async function getFolderSummary(folderName) {
+      try {
+        const res = await fetch(`https://githubusercontent.com{REPO_OWNER}/${REPO_NAME}/${BRANCH}/${folderName}/README.md`);
+        if (!res.ok) return null;
+        const text = await res.text();
+        const line = text.split('\n').map(l => l.trim()).find(l => l && !l.startsWith('#') && !l.startsWith('!'));
+        return line ? (line.length > 150 ? line.slice(0, 150) + '...' : line) : null;
+      } catch {
+        return null;
+      }
+    }
+
+    async function renderRepoFolders() {
+      const container = document.getElementById('projects-container');
+
+      try {
+        const res = await fetch(`https://github.com{REPO_OWNER}/${REPO_NAME}/contents`);
+        if (!res.ok) throw new Error('GitHub API error');
+
+        const items = await res.json();
+        const folders = items.filter(item => item.type === 'dir' && !IGNORED_FOLDERS.includes(item.name.toLowerCase()));
+
+        if (!folders.length) {
+          container.innerHTML = `
+            <article class="card">
+              <h3>No folders published yet</h3>
+              <p>Add a project directory to <code>${REPO_OWNER}/${REPO_NAME}</code> to display it here automatically.</p>
+            </article>`;
+          return;
+        }
+
+        container.innerHTML = '';
+
+        for (const folder of folders) {
+          const summary = await getFolderSummary(folder.name);
+          const description = summary || `Computational linguistics scripts, corpora, and notebooks inside /${folder.name}.`;
+          const pageUrl = `https://${REPO_OWNER}.github.io/${REPO_NAME}/${folder.name}/`;
+
+          const card = document.createElement('article');
+          card.className = 'card';
+          card.innerHTML = `
+            <h3>${formatTitle(folder.name)}</h3>
+            <p>${description}</p>
+            <div class="tags">
+              <span class="tag">/${folder.name}</span>
+              <span class="tag">CTeCL</span>
+            </div>
+            <div class="card-links">
+              <a href="${folder.html_url}" target="_blank" rel="noopener">View Folder ↗</a>
+              <a href="${pageUrl}" target="_blank" rel="noopener">Open Page ↗</a>
+            </div>
+          `;
+          container.appendChild(card);
+        }
+      } catch {
+        container.innerHTML = `
+          <article class="card">
+            <h3>Unable to load folders</h3>
+            <p>Visit the <a href="https://github.com{REPO_OWNER}/${REPO_NAME}" target="_blank" rel="noopener">CTeCL GitHub repository ↗</a> directly.</p>
+          </article>`;
+      }
+    }
+
+    renderRepoFolders();
+  </script>
+</body>
+</html>
