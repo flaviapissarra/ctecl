@@ -1,7 +1,0 @@
-{
-  "title": "Logistics & Freight Analytics Dashboard",
-  "category": "Data Engineering & BI",
-  "status": "Under Construction",
-  "description": "Data pipeline and BI dashboard analyzing freight costs, route efficiency, and carrier SLAs using Python and SQL.",
-  "tags": ["Python", "SQL", "Data Pipeline", "BI"]
-}
