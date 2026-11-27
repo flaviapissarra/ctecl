@@ -2,7 +2,7 @@
   --bg-color: #0a0a0a;
   --text-primary: #e6e6e6;
   --text-secondary: #8b949e;
-  --terminal-green: #00ff41; /* Use #008f4c se preferir o verde da marca */
+  --terminal-green: #00ff41;
   --border-color: #30363d;
   --path-blue: #58a6ff;
 }
@@ -18,111 +18,181 @@ body {
   padding: 2rem 1.5rem;
 }
 
-.content { max-width: 800px; margin: 0 auto; }
-
-/* Navegação */
-.nav-btn {
-  display: inline-block;
-  text-decoration: none;
-  color: var(--text-secondary);
-  font-size: 0.9rem;
-  margin-bottom: 2rem;
-  transition: color 0.2s;
-}
-.nav-btn:hover { color: var(--terminal-green); }
-.nav-btn::before { content: '< '; color: var(--terminal-green); }
-
-/* Container */
-.card {
-  border: 1px solid var(--border-color);
-  padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.02);
+/* Wrapper principal que centraliza tudo */
+.content {
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-/* Prompt */
+/* Navegação e Prompt */
 .cli-prompt {
   color: var(--terminal-green);
   font-size: 0.9rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
   display: block;
 }
 .cli-prompt .path { color: var(--path-blue); }
 
+/* Logo Centralizada e Circular */
+.logo-container {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto 1.5rem;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid var(--terminal-green);
+  box-shadow: 0 0 25px rgba(0, 255, 65, 0.15);
+}
+.logo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Tipografia do Header */
 h1 {
-  font-size: 1.8rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  text-align: center;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
   letter-spacing: -0.02em;
 }
 
-.description {
+.tagline {
+  text-align: center;
   color: var(--text-secondary);
-  margin-bottom: 2rem;
   font-size: 1rem;
+  margin-bottom: 2.5rem;
 }
 
-/* Status */
-.status-badge {
-  display: inline-block;
-  padding: 0.2rem 0.6rem;
-  border: 1px solid var(--terminal-green);
-  color: var(--terminal-green);
-  font-size: 0.75rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 1.5rem;
+/* Barra de Busca Estilizada */
+.search-container {
+  max-width: 500px;
+  margin: 0 auto 3rem;
 }
-
-/* Tags */
-.tech-stack {
-  margin-top: 1.5rem;
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-  border-top: 1px dashed var(--border-color);
-  padding-top: 1.5rem;
-}
-.tech-tag { font-size: 0.8rem; color: var(--terminal-green); }
-.tech-tag::before { content: '#'; opacity: 0.5; margin-right: 2px; }
-
-/* Botões */
-.btn-group { margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap; }
-.btn {
-  padding: 0.6rem 1.2rem;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.9rem;
+.search-input {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  background-color: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--border-color);
-  transition: all 0.2s;
+  border-radius: 6px;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s;
 }
-.btn-primary {
-  background-color: var(--terminal-green);
-  color: var(--bg-color);
-  border-color: var(--terminal-green);
-}
-.btn-primary:hover {
-  background-color: #00cc33;
-  box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
-}
-.btn-secondary { background-color: transparent; color: var(--text-secondary); }
-.btn-secondary:hover { color: var(--text-primary); border-color: var(--text-primary); }
+.search-input:focus { border-color: var(--terminal-green); }
+.search-input::placeholder { color: #555; }
 
-/* Cursor */
+/* Cabeçalho da Seção de Projetos */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed var(--border-color);
+}
+.section-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--terminal-green);
+}
+.project-count { font-size: 0.8rem; color: var(--text-secondary); }
+
+/* Grid e Cards de Projetos (CRUCIAL PARA O JS) */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.project-card {
+  display: block;
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.2s ease;
+  background: rgba(255, 255, 255, 0.01);
+}
+.project-card:hover {
+  border-color: var(--terminal-green);
+  transform: translateY(-3px);
+  background: rgba(0, 255, 65, 0.03);
+}
+
+.project-status {
+  display: inline-block;
+  font-size: 0.7rem;
+  color: var(--terminal-green);
+  border: 1px solid var(--terminal-green);
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.project-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: var(--text-primary);
+}
+
+.project-desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.25rem;
+  line-height: 1.5;
+}
+
+.tech-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.tech-tag {
+  font-size: 0.7rem;
+  color: var(--path-blue);
+  background: rgba(88, 166, 255, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+}
+
+/* Cursor Piscante */
 .cursor {
   display: inline-block;
-  width: 10px;
-  height: 1.2em;
+  width: 8px;
+  height: 1em;
   background-color: var(--terminal-green);
   vertical-align: middle;
   animation: blink 1s step-end infinite;
-  margin-left: 5px;
+  margin-left: 4px;
 }
 @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-.footer-note { margin-top: 2rem; font-size: 0.85rem; color: var(--text-secondary); }
+/* Footer */
+footer {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-color);
+}
+.social-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.85rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.social-link:hover { color: var(--terminal-green); }
 
-@media (max-width: 600px) {
-  h1 { font-size: 1.4rem; }
-  .card { padding: 1.5rem; }
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-secondary);
+  font-style: italic;
 }
