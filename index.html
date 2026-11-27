@@ -11,41 +11,49 @@
 </head>
 <body>
 
-  <header>
-    <div class="logo-container">
-      <img src="assets/img/logo-ctecl.webp" alt="CTeCL Logo" loading="lazy" />
-    </div>
-    <h1>CTeCL</h1>
-    <p class="tagline">Computational Linguistics & AI Research Lab<br/>Bridging human language and machine intelligence.</p>
-    
-    <div class="search-container">
-      <input 
-        type="text" 
-        id="searchInput" 
-        class="search-input" 
-        placeholder="Search projects by name, tech stack, or description..." 
-        aria-label="Search projects"
-      />
-    </div>
-  </header>
+  <div class="content">
+    <header>
+      <span class="cli-prompt">
+        <span class="path">flavia@ctecl</span>:~/ctecl$ 
+        <span class="cursor"></span>
+      </span>
+      
+      <div class="logo-container">
+        <img src="assets/img/logo-ctecl.webp" alt="CTeCL Logo" loading="lazy" />
+      </div>
+      
+      <h1>CTeCL</h1>
+      <p class="tagline">Computational Linguistics & AI Research Lab<br/>Bridging human language and machine intelligence.</p>
+      
+      <div class="search-container">
+        <input 
+          type="text" 
+          id="searchInput" 
+          class="search-input" 
+          placeholder="Search projects by name, tech stack, or description..." 
+          aria-label="Search projects"
+        />
+      </div>
+    </header>
 
-  <main>
-    <div class="section-header">
-      <h2 class="section-title">Featured Projects</h2>
-      <span id="projectCount" class="project-count">Loading...</span>
-    </div>
-    
-    <div id="projectsGrid" class="projects-grid">
-      <!-- Projects injected dynamically via JavaScript -->
-    </div>
-  </main>
+    <main>
+      <div class="section-header">
+        <h2 class="section-title">Featured Projects</h2>
+        <span id="projectCount" class="project-count">Loading...</span>
+      </div>
+      
+      <div id="projectsGrid" class="projects-grid">
+        <!-- Projects injected dynamically via JavaScript -->
+      </div>
+    </main>
 
-  <footer>
-    <a href="https://www.instagram.com/ctecl" target="_blank" rel="noopener noreferrer" class="social-link">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-      Follow CTeCL on Instagram
-    </a>
-  </footer>
+    <footer>
+      <a href="https://www.instagram.com/ctecl" target="_blank" rel="noopener noreferrer" class="social-link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+        Follow CTeCL on Instagram
+      </a>
+    </footer>
+  </div>
 
   <script src="assets/js/projects-loader.js" defer></script>
 </body>
