@@ -1,5 +1,7 @@
 /* ============================================
-   CTeCL Portfolio - Global Styles - Terminal-inspired dark theme
+   CTeCL Portfolio — Global Styles
+   Terminal-inspired dark theme
+   Layout: Prompt Left / Content Centered
    ============================================ */
 
 /* ===== 1. Design Tokens ===== */
@@ -89,29 +91,34 @@ img {
   background: var(--terminal-green);
 }
 
-/* ===== 5. Layout ===== */
+/* ===== 5. Layout Wrapper ===== */
 .content {
   max-width: 800px;
   margin: 0 auto;
 }
 
-/* ===== 6. Header ===== */
+/* ===== 6. Header (Merged Layout) ===== */
 header {
-  text-align: center;
   padding: 2rem 0 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza logo, h1, tagline e busca */
 }
 
+/* O prompt quebra o alinhamento central e vai para a esquerda */
 .cli-prompt {
+  align-self: flex-start;
   color: var(--terminal-green);
   font-size: 0.9rem;
+  margin-bottom: 3rem;
   display: block;
-  margin-bottom: 2rem;
 }
 
 .cli-prompt .path {
   color: var(--path-blue);
 }
 
+/* Elementos centralizados */
 .logo-container {
   width: 110px;
   height: 110px;
@@ -138,6 +145,7 @@ h1 {
   font-weight: 700;
   letter-spacing: -0.02em;
   margin-bottom: 0.5rem;
+  text-align: center;
 }
 
 .tagline {
@@ -145,10 +153,12 @@ h1 {
   font-size: 1rem;
   max-width: 600px;
   margin: 0 auto 2.5rem;
+  text-align: center;
 }
 
 /* ===== 7. Search ===== */
 .search-container {
+  width: 100%;
   max-width: 500px;
   margin: 0 auto;
 }
@@ -277,7 +287,7 @@ h1 {
   50% { opacity: 0; }
 }
 
-/* ===== 11. Footer & Links (Lado a Lado) ===== */
+/* ===== 11. Footer & Links ===== */
 footer {
   display: flex;
   justify-content: center;
@@ -289,7 +299,6 @@ footer {
   margin-top: 2rem;
 }
 
-/* Reseta estilos nativos de button e a para ficarem idênticos */
 .social-link,
 .contact-link {
   background: none;
@@ -306,13 +315,11 @@ footer {
   transition: color var(--transition-fast);
 }
 
-/* Hover unificado */
 .social-link:hover,
 .contact-link:hover {
   color: var(--terminal-green);
 }
 
-/* Garante que SVGs dentro dos links herdem a cor */
 .social-link svg,
 .contact-link svg {
   stroke: currentColor;
@@ -412,7 +419,6 @@ footer {
   resize: vertical;
 }
 
-/* Botão de submit — seletor específico evita !important */
 .contact-form button[type="submit"] {
   width: 100%;
   padding: 0.8rem;
@@ -475,6 +481,13 @@ footer {
 @media (max-width: 600px) {
   body {
     padding: 1rem;
+  }
+
+  /* No mobile, o prompt também fica centralizado para economizar espaço */
+  .cli-prompt {
+    align-self: center;
+    text-align: center;
+    font-size: 0.8rem;
   }
 
   h1 {
