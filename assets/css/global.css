@@ -277,7 +277,7 @@ h1 {
   50% { opacity: 0; }
 }
 
-/* ===== 11. Footer & Links (lado a lado) ===== */
+/* ===== 11. Footer & Links (Lado a Lado) ===== */
 footer {
   display: flex;
   justify-content: center;
@@ -289,26 +289,34 @@ footer {
   margin-top: 2rem;
 }
 
+/* Reseta estilos nativos de button e a para ficarem idênticos */
 .social-link,
 .contact-link {
+  background: none;
+  border: none;
   color: var(--text-secondary);
+  font-family: var(--font-mono);
   font-size: 0.85rem;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: none;
   transition: color var(--transition-fast);
 }
 
+/* Hover unificado */
 .social-link:hover,
 .contact-link:hover {
   color: var(--terminal-green);
 }
 
-.contact-link {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
+/* Garante que SVGs dentro dos links herdem a cor */
+.social-link svg,
+.contact-link svg {
+  stroke: currentColor;
+  fill: none;
 }
 
 /* ===== 12. Modal ===== */
