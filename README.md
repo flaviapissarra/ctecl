@@ -1,4 +1,4 @@
-# CTeCL · Computational Linguistics & AI Research Lab
+# CTecL · Computational Linguistics & AI Research Lab
 
 Bridging human language and machine intelligence through applied NLP, Generative AI, and secure software architecture.
 
